@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designer & Developer Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* THEME VARIABLES */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --text-primary: #000000;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0,0,0,0.1);
+    --nav-bg: rgba(255,255,255,0.85);
+    --border-color: #e5e5e5;
+}
+
+body.dark {
+    --bg-primary: linear-gradient(135deg,#0f0f0f,#1a1a1a,#121212);
+    --bg-secondary: #181818;
+    --text-primary: #f5f5f5;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-shadow: rgba(0,0,0,0.6);
+    --nav-bg: rgba(15,15,15,0.85);
+    --border-color: #2a2a2a;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+nav {
+    background: var(--nav-bg);
+    border-color: var(--border-color);
+}
+
+#portfolio,
+#contact,
+#skills {
+    background: var(--bg-secondary);
+}
+
+.card {
+    background: var(--card-bg);
+    box-shadow: 0 6px 18px var(--card-shadow);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.split-side:first-child {
+    background: var(--bg-secondary);
+}
+
+.split-side:last-child {
+    background: #000;
+    color: #fff;
+}
+
+input, textarea {
+    transition: all 0.3s ease;
+}
+
+body.dark input,
+body.dark textarea {
+    background: #1f1f1f;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+body.dark button[type="submit"] {
+    background: #fff;
+    color: #000;
+}
+
+body.dark button[type="submit"]:hover {
+    background: #e5e5e5;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+}
+
+/* Circular Skill Charts */
+.skill-circle {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    background: conic-gradient(#4f46e5 0deg, #e5e7eb 0deg);
+    transition: all 0.4s ease;
+}
+
+.skill-circle span {
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.skill-label {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.4s ease;
+}
+
+/* Skills Grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+    gap: 2rem;
+    justify-items: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+/* Homepage Image Circle */
+#home-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid #4f46e5;
+    overflow: hidden;
+    z-index: 10;
+}
+
+#home-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width:768px){
+.split-side{
+    width:100%!important;
+    height:50vh;
+}
+#home .absolute.inset-0.flex{
+    flex-direction:column;
+}
+#home-image {
+    position: static;
+    transform: none;
+    margin: 0 auto 2rem auto;
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 w-full backdrop-blur-sm z-50 border-b">
+<div class="max-w-7xl mx-auto px-4">
+<div class="flex justify-between items-center py-4">
+<a href="#home" class="text-xl font-semibold">AM</a>
+<ul class="hidden md:flex space-x-8">
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#portfolio">Portfolio</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<button id="theme-toggle"><i class="fas fa-sun"></i></button>
+</div>
+</div>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 flex">
+<!-- Developer -->
+<div class="w-1/2 flex items-center justify-center split-side">
+<div class="text-center">
+<h1 class="text-6xl font-bold mb-4">Developer</h1>
+<p>Crafting websites with AI-assisted design and code, and make it creative</p>
+</div>
+</div>
+
+<!-- Security Expert -->
+<div class="w-1/2 flex items-center justify-center split-side">
+<div class="text-center">
+<h1 class="text-6xl font-bold mb-4">Security Expert</h1>
+<p>Investigation, threat hunting & secure development</p>
+</div>
+</div>
+</div>
+
+<!-- Middle Circular Image -->
+<div id="home-image">
+<img src="WhatsApp Image 2026-02-10 at 12.08.27 AM.jpeg" alt="Stylized Portrait">
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-20 max-w-4xl mx-auto px-6">
+<h2 class="text-4xl font-bold mb-6">About</h2>
+<p class="text-lg">
+I am a passionate Cybersecurity expert and the digital forensic investator , love to work in the field of security and explore the new security breaches eith the new techonology . Also love to read the books and gain the knowlege in all field , also have an experice in the leardership and team management. 
+</p>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="py-20 px-6">
+<div class="max-w-7xl mx-auto text-center">
+<h2 class="text-4xl font-bold mb-12">Skills</h2>
+
+<div class="skills-grid">
+
+<div>
+<div class="skill-circle" data-percentage="80">
+<span>0%</span>
+</div>
+<div class="skill-label mt-2">Social Media OSINT</div>
+</div>
+
+<div>
+<div class="skill-circle" data-percentage="60">
+<span>0%</span>
+</div>
+<div class="skill-label mt-2">Bug hunting</div>
+</div>
+
+<div>
+<div class="skill-circle" data-percentage="60">
+<span>0%</span>
+</div>
+<div class="skill-label mt-2">JavaScript</div>
+</div>
+
+<div>
+<div class="skill-circle" data-percentage="80">
+<span>0%</span>
+</div>
+<div class="skill-label mt-2">SOC Analytics</div>
+</div>
+
+<div>
+<div class="skill-circle" data-percentage="90">
+<span>0%</span>
+</div>
+<div class="skill-label mt-2">Communication</div>
+</div>
+
+<div>
+<div class="skill-circle" data-percentage="100">
+<span>0%</span>
+</div>
+<div class="skill-label mt-2">Leardership and management</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="py-20 px-6">
+<div class="max-w-7xl mx-auto">
+<h2 class="text-4xl font-bold text-center mb-12">Portfolio</h2>
+
+<div class="grid md:grid-cols-3 gap-8">
+
+<div class="card">
+<img src="Screenshot 2026-02-13 113854.png" class="w-full h-56 object-cover">
+<div class="p-6"><h3 class="text-xl font-semibold mb-3">Internship</h3></div>
+</div>
+
+<div class="card">
+<img src="Screenshot 2026-02-10 115450.png" class="w-full h-56 object-cover">
+<div class="p-6"><h3 class="text-xl font-semibold mb-3">STTP</h3></div>
+</div>
+
+<div class="card">
+<img src="Screenshot 2026-02-13 113915.png" class="w-full h-56 object-cover">
+<div class="p-6"><h3 class="text-xl font-semibold mb-3">Internship</h3></div>
+</div>
+
+<div class="card">
+<img src="Screenshot 2026-02-13 113948.png" class="w-full h-56 object-cover">
+<div class="p-6"><h3 class="text-xl font-semibold mb-3">Forage platform Cybersecurity</h3></div>
+</div>
+
+<div class="card">
+<img src="Screenshot 2026-02-13 114004.png" class="w-full h-56 object-cover">
+<div class="p-6"><h3 class="text-xl font-semibold mb-3">Deloitte Cyber simulation</h3></div>
+</div>
+
+<div class="card">
+<img src="web_traffic_protection_associate.png" class="w-full h-56 object-cover">
+<div class="p-6"><h3 class="text-xl font-semibold mb-3">OPSWAT academy web traffic course</h3></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-20 px-6">
+<div class="max-w-6xl mx-auto">
+<h2 class="text-4xl font-bold text-center mb-12">Let’s Work Together</h2>
+
+<div class="grid md:grid-cols-2 gap-12 items-center">
+
+<div>
+<form class="space-y-5">
+<input type="text" placeholder="Name" class="w-full p-3 border rounded">
+<input type="email" placeholder="Email" class="w-full p-3 border rounded">
+<textarea placeholder="Message" rows="5" class="w-full p-3 border rounded"></textarea>
+<button type="submit" class="w-full py-3 rounded bg-black text-white hover:scale-105 transition">
+Send Message
+</button>
+</form>
+</div>
+
+<div>
+<h3 class="text-3xl font-semibold mb-6">Let’s Build Something Impactful 🚀</h3>
+<p class="mb-4 text-lg">Love to collaborate with the peoples , if you want send me the message , I will reply you ASAP .</p>
+<p class="font-medium mb-6">"Collaboration turns potential into progress."</p>
+<img src="istockphoto-635974362-612x612.jpg" class="rounded-lg shadow-lg w-full">
+</div>
+
+</div>
+</div>
+</section>
+
+<script>
+// Dark Mode Toggle
+const toggle = document.getElementById('theme-toggle');
+const body = document.body;
+const icon = toggle.querySelector('i');
+
+function applyTheme(theme) {
+    body.classList.toggle('dark', theme === 'dark');
+    icon.classList.toggle('fa-sun', theme !== 'dark');
+    icon.classList.toggle('fa-moon', theme === 'dark');
+}
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) applyTheme(savedTheme);
+else applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+toggle.addEventListener('click', () => {
+    const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+});
+
+// Animate Skill Circles
+gsap.utils.toArray('.skill-circle').forEach(circle => {
+    const span = circle.querySelector('span');
+    const percentage = circle.dataset.percentage;
+
+    ScrollTrigger.create({
+        trigger: circle,
+        start: "top 80%",
+        onEnter: () => {
+            gsap.to({}, {
+                duration: 2,
+                onUpdate: function() {
+                    const val = Math.floor(this.progress() * percentage);
+                    span.textContent = val + '%';
+                    circle.style.background = `conic-gradient(#4f46e5 ${val*3.6}deg, #e5e7eb 0deg)`;
+                }
+            });
+        }
+    });
+});
+</script>
+
+</body>
+</html>
